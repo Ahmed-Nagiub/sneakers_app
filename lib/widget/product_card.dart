@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sneakers_app/models/sneakers_model.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sneakers_app/data/models/product_model.dart';
 import 'package:sneakers_app/utils/app_colors.dart';
+import 'package:sneakers_app/utils/images.dart';
 
-class SneakersCard extends StatelessWidget {
-  final SneakersItem sneakersItem;
+class ProductCard extends StatelessWidget {
+  final ProductModel productItem;
 
-  const SneakersCard({super.key, required this.sneakersItem});
+  const ProductCard({super.key, required this.productItem});
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +29,35 @@ class SneakersCard extends StatelessWidget {
                   topLeft: Radius.circular(15),
                 ),
                 child: Image.network(
-                  sneakersItem.imageUrl,
+                  productItem.image,
                   width: double.infinity,
                   height: 130,
                   fit: BoxFit.fill,
                 ),
               ),
-              const Positioned(
+              Positioned(
                 top: 8,
                 right: 8,
                 child: CircleAvatar(
                   radius: 16,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.favorite_border,
-                      size: 24, color: AppColors.favoriteColor),
+                  child: SvgPicture.asset(Images.favorite),
                 ),
               ),
             ],
           ),
           Padding(
             padding: const EdgeInsets.all(5),
-            child: Text(
-              sneakersItem.title,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: AppColors.fontColor,
+            child: SizedBox(
+              width: 160,
+              child: Text(
+                productItem.title,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.fontColor,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),
@@ -61,7 +66,7 @@ class SneakersCard extends StatelessWidget {
             child: SizedBox(
               width: 160,
               child: Text(
-                sneakersItem.description,
+                productItem.description,
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -77,7 +82,7 @@ class SneakersCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'EGP ${sneakersItem.price}',
+                  'EGP ${productItem.price}',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -86,7 +91,7 @@ class SneakersCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 Text(
-                  'EGP ${sneakersItem.originalPrice}',
+                  'EGP ${productItem.price + 200}',
                   style: const TextStyle(
                     fontSize: 12,
                     decoration: TextDecoration.lineThrough,
@@ -103,7 +108,7 @@ class SneakersCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('Review (${sneakersItem.rating})'),
+                    Text('Review (${productItem.rating.rate})'),
                     const Icon(Icons.star, color: Colors.amber, size: 16),
                   ],
                 ),
